@@ -9,13 +9,13 @@
 
 variable "my_region" {
   type    = string
-  default = "eu-central-1"
+  default = "eu-west-1"
   description = "The AWS region to deploy into (i.e. us-east-1)"
 }
 
 variable "avail_zone" {
   type    = string
-  default = "eu-central-1a"
+  default = "eu-west-1a"
   description = "The AWS availability zone location within the selected region (i.e. us-east-2a)."
 }
 
@@ -32,7 +32,7 @@ variable "my_cidr_block" {
 
 variable "my_key_pair_name" {
   type    = string
-  default = "james-development"
+  default = "james-development-eu-west-1"
   description = "The name of the SSH key to install onto the instances."
 }
 
@@ -43,26 +43,26 @@ variable "ssh-key-dir" {
 
 variable "instance_type" {
   type    = string
-  default = "p3.2xlarge"
+  default = "p2.xlarge"
   description = "The instance type to provision the instances from (i.e. p2.xlarge)."
 
 }
 
 variable "spot_price" {
   type    = string
-  default = "1.20"
+  default = "0.50"
   description = "The maximum hourly price (bid) you are willing to pay for the specified instance, i.e. 0.10. This price should not be below AWS' minimum spot price for the instance based on the region."
 }
 
 variable "ebs_volume_id" {
   type = string
-  default = "vol-078786bd833150812"
+  default = "vol-050aa74a11a5cf1db"
   description = "The EBS volume that you would like to attach to the instance. This volume should already exist: it will not be managed by Terraform"
 }
 
 variable "ami_id" {
   type    = string
-  default = "ami-001ec343bb21e7e59" # Default AWS Deep Learning AMI (Ubuntu)
+  default = "ami-003c19688b5ed7925" # Default AWS Deep Learning AMI (Ubuntu)
   description = "The AMI ID to use for each instance. The AMI ID will be different depending on the region, even though the name is the same."
 }
 
