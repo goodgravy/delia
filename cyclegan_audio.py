@@ -28,10 +28,9 @@ from scipy.io import wavfile
 logging.basicConfig(level=logging.INFO)
 
 def define_image_discriminator(image_shape):
-	# weight initialization
 	init = RandomNormal(stddev=0.02)
-	# source image input
 	in_image = Input(shape=image_shape)
+
 	# C64
 	d = Conv2D(64, (4,4), strides=(2,2), padding='same', kernel_initializer=init)(in_image)
 	d = LeakyReLU(alpha=0.2)(d)
@@ -51,11 +50,9 @@ def define_image_discriminator(image_shape):
 	d = Conv2D(512, (4,4), padding='same', kernel_initializer=init)(d)
 	d = InstanceNormalization(axis=-1)(d)
 	d = LeakyReLU(alpha=0.2)(d)
-	# patch output
+
 	patch_out = Conv2D(1, (4,4), padding='same', kernel_initializer=init)(d)
-	# define model
 	model = Model(in_image, patch_out)
-	# compile model
 	model.compile(loss='mse', optimizer=Adam(lr=0.0002, beta_1=0.5), loss_weights=[0.5])
 	return model
 
@@ -64,21 +61,22 @@ def define_audio_discriminator(audio_shape):
 	init = RandomNormal(stddev=0.02)
 	in_audio = Input(shape=audio_shape)
 
+	# 1-dimension C64
 	d = Conv1D(64, 4, strides=2, padding='same', kernel_initializer=init)(in_audio)
 	d = LeakyReLU(alpha=0.2)(d)
-
+	# 1-dimension C128
 	d = Conv1D(128, 4, strides=2, padding='same', kernel_initializer=init)(d)
 	d = InstanceNormalization(axis=-1)(d)
 	d = LeakyReLU(alpha=0.2)(d)
-
+	# 1-dimension C256
 	d = Conv1D(256, 4, strides=2, padding='same', kernel_initializer=init)(d)
 	d = InstanceNormalization(axis=-1)(d)
 	d = LeakyReLU(alpha=0.2)(d)
-
+	# 1-dimension C512
 	d = Conv1D(512, 4, strides=2, padding='same', kernel_initializer=init)(d)
 	d = InstanceNormalization(axis=-1)(d)
 	d = LeakyReLU(alpha=0.2)(d)
-
+	# 1-dimension C512
 	d = Conv1D(512, 4, padding='same', kernel_initializer=init)(d)
 	d = InstanceNormalization(axis=-1)(d)
 	d = LeakyReLU(alpha=0.2)(d)
@@ -403,10 +401,6 @@ def main():
 	audio_shape = audio.shape[1:]
 	logging.info('image_shape: %s', image_shape)
 	logging.info('audio_shape: %s', audio_shape)
-
-	# generate_one_fake_audio()
-	# generate_one_fake_image()
-	# return
 
 	g_model_ImageToAudio = define_audio_generator(image_shape)
 	g_model_AudioToImage = define_image_generator(audio_shape)

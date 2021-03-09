@@ -62,7 +62,7 @@ variable "ebs_volume_id" {
 
 variable "ami_id" {
   type    = string
-  default = "ami-003c19688b5ed7925" # Default AWS Deep Learning AMI (Ubuntu)
+  default = "ami-0e5d3cb86ff6f2dcb" # Default AWS Deep Learning AMI (Ubuntu)
   description = "The AMI ID to use for each instance. The AMI ID will be different depending on the region, even though the name is the same."
 }
 
